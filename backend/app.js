@@ -182,7 +182,7 @@ app.post('/createJournal', async (req, res) => {
     }
 })
 
-app.put('/editJournal', async (req, res) => {
+app.patch('/editJournal', async (req, res) => {
     try {
         const {journalID, newContent} = req.body;
 
