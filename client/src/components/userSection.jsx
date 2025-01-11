@@ -51,6 +51,7 @@ export const UserSection = () => {
         
         <Modal handleClose={() => setOpenModal(false)}>
                 <div className="flex justify-start max-w-52 gap-2 flex-wrap">
+                    <p>Choose your Avatar:</p>
                     {avatarArr.map((a, i) =>
                         <div onClick={() => handleClickonChibi(a)} className="cursor-pointer hover:scale-105 duration-75 ease-linear active:scale-90"  >
                             <img className="w-16 aspect-square rounded-full object-cover border border-mgreen" src={a} key={i} />

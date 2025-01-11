@@ -15,10 +15,7 @@ import npc3 from "../assets/npc/chibi3-removebg-preview.png";
 import npc4 from "../assets/npc/chibi4-removebg-preview (2).png";
 import npc5 from "../assets/npc/chibi5-removebg-preview.png";
 
-import tree2 from "../assets/tree/tree__2_-removebg-preview.png";
-import tree3 from "../assets/tree/tree__3_-removebg-preview.png";
-import tree4 from "../assets/tree/tree__4_-removebg-preview.png";
-import tree5 from "../assets/tree/tree__5_-removebg-preview.png";
+
 
 const NPCMsg = ['Everyting will be fine!', "Take a break!", 'You can do it!', "Almost there!", "You got there!"]
 
@@ -39,8 +36,5 @@ export {
   npc4,
   npc5,
   NPCMsg,
-  tree2,
-  tree3,
-  tree4,
-  tree5
+
 };

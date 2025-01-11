@@ -34,10 +34,17 @@ const NpcAtom = atom({
     }
 })
 
+const userIdAtom = atom ({
+    key: "userIdAtom",
+    default: "",
+})
+
 export{
     avatarAtom,
     usernameAtom,
     LoaderMsgAtom,
     LoaderAtom,
-    ToastMsgAtom
+    ToastMsgAtom,
+    NpcAtom,
+    userIdAtom
 }

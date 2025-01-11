@@ -5,6 +5,8 @@ import LoginScreen from "./LoginScreen"
 import SignupScreen from "./signupscreen"
 import { ProfileScreen } from "./screens/profileScreen"
 import JournalPage from "./screens/journalScreen"
+import { FirstAidKit } from "./screens/firstaidkit"
+import { Dashboard } from "./screens/Dashboard"
 
 
 
@@ -16,7 +18,9 @@ const router = createBrowserRouter([
       {path: "auth/login", element: <div><LoginScreen /></div>},
       {path: "auth/signup", element: <div><SignupScreen /></div> },
       {path: "profile", element: <ProfileScreen />},
-      {path: "journal", element: <><JournalPage /></>}
+      {path: "journal", element: <><JournalPage /></>},
+      {path: "dashboard", element: <Dashboard />},
+      { path: "firstAidKit", element: <FirstAidKit /> }
     ]
   },
 ])
