@@ -9,7 +9,7 @@ import { FirstAidKit } from "./screens/firstaidkit"
 import { Dashboard } from "./screens/Dashboard"
 import GameOne from "./gameOne"
 import GameTwo from "./gameTwo"
-
+import SoundPlayer from "./SoundPlayer"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +22,8 @@ const router = createBrowserRouter([
       {path: "dashboard", element: <Dashboard />},
       { path: "firstAidKit", element: <FirstAidKit /> },
       {path:"game1",element:<GameOne />},
-      {path:"game2",element:<GameTwo />}
+      {path:"game2",element:<GameTwo />},
+      {path:"sound",element:<SoundPlayer/>}
     ]
   },
 ])
