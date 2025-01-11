@@ -15,7 +15,6 @@ const JournalPage = () => {
   const [editingId, setEditingId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(null);
-
   const handleSave = async () => {
     if (editingId) {
       const updatedEntries = entries.map(entry =>
