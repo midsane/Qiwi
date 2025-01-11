@@ -12,15 +12,15 @@ export const ProfileScreen = () => {
         <NPCDada />
      </section>
 
-     <section className="flex gap-2 justify-center items-center" >
-        <Box logo={<Notebook />} title="Journal" />
-        <Box logo={<ChartBarIncreasing />} title="Dashboard" />
-        <Box logo={<BriefcaseMedical />} title="First Aid Kit" />
+     <section className="flex gap-5 flex-col justify-center items-center" >
+        <div className="w-full flex  justify-between items-center rounded">
+          <Box logo={<Notebook />} title="Journal" />
+          <Box logo={<ChartBarIncreasing />} title="Dashboard" />
+          <Box logo={<BriefcaseMedical />} title="First Aid Kit" />
+        </div>
+        <BadgeSection />
      </section>
 
-      <section>
-        <BadgeSection />
-      </section>
      <section>
         <HeatMap />
      </section>

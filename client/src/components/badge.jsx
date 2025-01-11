@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { cn } from "../lib/util.js";
+import { Modal } from "./modal.jsx";
 
 export function GameBadge({
     variant = 'bronze',
+    text="7 Day",
     size = 'md',
     hasWings = false,
     className
@@ -23,69 +26,107 @@ export function GameBadge({
         orange: { from: '#FFA500', to: '#FF4500', wing: '#FFD700' },
         'silver-wings': { from: '#E8E8E8', to: '#A9A9A9', wing: '#FFFFFF' },
     };
-
+    const [openModal, setOpenModal] = useState(false)
+    
     const { from, to, wing } = gradients[variant];
+    const handleClick = (b) => {
+        alert('sdf')
+        setOpenModal(true)
+       
+    }
 
     return (
-        <div className={cn("relative", sizeClasses[size], className)}>
-            
-            {hasWings && (
-                <>
-                    <svg
-                        className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
-                        width="50%"
-                        height="80%"
-                        viewBox="0 0 24 32"
+       <>
+       {openModal && <Modal handleClose={() => setOpenModal(false)} >
+            <GameBadge variant={variant} text={text + " challenge"} />
+        
+        </Modal>}
+            <div  className={cn("relative", sizeClasses[size], className)}>
+
+
+                {hasWings && (
+                    <>
+                        <svg
+                            onClick={() => handleClick}
+                            className="cursor-pointer absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
+                            width="50%"
+                            height="80%"
+                            viewBox="0 0 24 32"
+                        >
+                            <path
+                                d="M24 16C24 16 12 8 0 16C12 24 24 16 24 16Z"
+                                fill={wing}
+                                className="drop-shadow-lg"
+                            />
+                        </svg>
+                        <svg
+                            onClick={() => handleClick}
+                            className="absolute cursor-pointer right-0 top-1/2 translate-x-1/2 -translate-y-1/2 transform"
+                            width="50%"
+                            height="80%"
+                            viewBox="0 0 24 32"
+                        >
+                            <path
+                                d="M0 16C0 16 12 8 24 16C12 24 0 16 0 16Z"
+                                fill={wing}
+                                className="drop-shadow-lg"
+                            />
+                            <text
+                                x="12"
+                                y="16"
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                fill="black"
+                                fontSize="4"
+                            >
+                                {text}
+                            </text>
+                        </svg>
+                    </>
+                )}
+                <svg
+                    onClick={() => handleClick}
+                    viewBox="0 0 100 100"
+                    className="relative w-full cursor-pointer h-full drop-shadow-xl"
+                >
+                    <defs>
+                        <linearGradient id={`gradient-${variant}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor={from} />
+                            <stop offset="100%" stopColor={to} />
+                        </linearGradient>
+                        <filter id="inner-shadow">
+                            <feOffset dx="0" dy="2" />
+                            <feGaussianBlur stdDeviation="2" />
+                            <feComposite operator="out" in="SourceGraphic" />
+                            <feBlend mode="multiply" in2="SourceGraphic" />
+                        </filter>
+                    </defs>
+                    <path
+                        d="M50 0 L93.3 25 V75 L50 100 L6.7 75 V25 Z"
+                        fill={`url(#gradient-${variant})`}
+                        className="filter drop-shadow-lg"
+                    />
+                    <path
+                        d="M50 5 L88.3 27.5 V72.5 L50 95 L11.7 72.5 V27.5 Z"
+                        fill={`url(#gradient-${variant})`}
+                        filter="url(#inner-shadow)"
+                        opacity="0.7"
+                    />
+                    <text
+                        x="50"
+                        y="50"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                        fontSize="22"
+                        fill="white"
+                        fontWeight="bold"
                     >
-                        <path
-                            d="M24 16C24 16 12 8 0 16C12 24 24 16 24 16Z"
-                            fill={wing}
-                            className="drop-shadow-lg"
-                        />
-                    </svg>
-                    <svg
-                        className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 transform"
-                        width="50%"
-                        height="80%"
-                        viewBox="0 0 24 32"
-                    >
-                        <path
-                            d="M0 16C0 16 12 8 24 16C12 24 0 16 0 16Z"
-                            fill={wing}
-                            className="drop-shadow-lg"
-                        />
-                    </svg>
-                </>
-            )}
-            <svg
-                viewBox="0 0 100 100"
-                className="relative w-full h-full drop-shadow-xl"
-            >
-                <defs>
-                    <linearGradient id={`gradient-${variant}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor={from} />
-                        <stop offset="100%" stopColor={to} />
-                    </linearGradient>
-                    <filter id="inner-shadow">
-                        <feOffset dx="0" dy="2" />
-                        <feGaussianBlur stdDeviation="2" />
-                        <feComposite operator="out" in="SourceGraphic" />
-                        <feBlend mode="multiply" in2="SourceGraphic" />
-                    </filter>
-                </defs>
-                <path
-                    d="M50 0 L93.3 25 V75 L50 100 L6.7 75 V25 Z"
-                    fill={`url(#gradient-${variant})`}
-                    className="filter drop-shadow-lg"
-                />
-                <path
-                    d="M50 5 L88.3 27.5 V72.5 L50 95 L11.7 72.5 V27.5 Z"
-                    fill={`url(#gradient-${variant})`}
-                    filter="url(#inner-shadow)"
-                    opacity="0.7"
-                />
-            </svg>
-        </div>
+                        {text}
+                    </text>
+                </svg>
+
+            </div>
+       </>
     );
 }
 
