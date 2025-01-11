@@ -139,7 +139,33 @@ app.put('/updateXp', async (req, res) => {
     }
 })
 
-// JOURNAL ENDPOIINTS
+//MOODS
+app.get('/isLogged', async (req, res) => {
+    try {
+        const user_id = req.body;
+
+        const date = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth()+1).padStart(2, '0');
+        const year = now.getFullYear();
+        const now = `${day}${month}${year}`;
+
+        const Logged = Mood.findOne({date:now}) || Journal.findOne({date:now});
+        let isLogged ;
+        if(!isLogged) {
+            isLogged = false;
+        } else {
+            isLogged = true;
+        }
+
+        return res.status(201).json({isLogged:isLogged})
+    } catch (error) {
+        return res.status(500).json({message:'Error checking log', error: error.message})
+    }
+})
+
+
+
+// JOURNAL ENDPOINTS
 app.get('/getAllJournals', async (req, res) => {
     try {
         const {userId,date} = req.body;
@@ -148,7 +174,8 @@ app.get('/getAllJournals', async (req, res) => {
             return res.status(400).json({message:'user ID is required'});
         }
 
-        const journals = await Journal.find({user_id:userId,date:date}); // Fetch all journals from the database
+        const journals = await Journal.find({user_id:userId,date:date})
+            .sort({time: -1}).exec(); // Fetch all journals from the database
         res.status(200).json(journals); // Return the journals as a JSON response
     } catch (error) {
         console.log(error);
@@ -164,12 +191,13 @@ app.post('/createJournal', async (req, res) => {
         const year = now.getFullYear();
         const now = `${day}${month}${year}`;
 
-        const currentDay = now.toLocaleString('en-us', { weekday: 'short' });
+        const currentTime = new Date().toTimeString().split(' ')[0];
+
         const newJournal = new Journal({
             user_id,
             content,
             date: now,
-            day: currentDay
+            time: currentTime,
         });
 
         await newJournal.save();

@@ -7,8 +7,8 @@ import { ProfileScreen } from "./screens/profileScreen"
 import JournalPage from "./screens/journalScreen"
 import { FirstAidKit } from "./screens/firstaidkit"
 import { Dashboard } from "./screens/Dashboard"
-
-
+import GameOne from "./gameOne"
+import GameTwo from "./gameTwo"
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,9 @@ const router = createBrowserRouter([
       {path: "profile", element: <ProfileScreen />},
       {path: "journal", element: <><JournalPage /></>},
       {path: "dashboard", element: <Dashboard />},
-      { path: "firstAidKit", element: <FirstAidKit /> }
+      { path: "firstAidKit", element: <FirstAidKit /> },
+      {path:"game1",element:<GameOne />},
+      {path:"game2",element:<GameTwo />}
     ]
   },
 ])
