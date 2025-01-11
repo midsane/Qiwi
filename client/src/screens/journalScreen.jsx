@@ -8,7 +8,7 @@ const JournalPage = () => {
     { id: 1, date: '2025-01-11', content: 'Today was a productive day...', lastEdited: new Date()},
     { id: 2, date: '2025-01-10', content: 'Reflecting on my goals...', lastEdited: new Date()}
   ]);
-  //go here
+  
   const userId = useRecoilValue(userIdAtom)
 
   const [newEntry, setNewEntry] = useState('');

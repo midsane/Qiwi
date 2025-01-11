@@ -1,7 +1,4 @@
-import { useState } from "react";
 import { cn } from "../lib/util.js";
-import { Modal } from "./modal.jsx";
-
 export function GameBadge({
     variant = 'bronze',
     text="7 Day",
@@ -14,7 +11,7 @@ export function GameBadge({
         md: 'w-12 h-12',
         lg: 'w-20 h-20',
     };
-    console.log(variant)
+
     
     const gradients = {
         bronze: { from: '#CD7F32', to: '#8B4513', wing: '#FFA500' },
@@ -26,28 +23,19 @@ export function GameBadge({
         orange: { from: '#FFA500', to: '#FF4500', wing: '#FFD700' },
         'silver-wings': { from: '#E8E8E8', to: '#A9A9A9', wing: '#FFFFFF' },
     };
-    const [openModal, setOpenModal] = useState(false)
-    
+ 
     const { from, to, wing } = gradients[variant];
-    const handleClick = (b) => {
-        alert('sdf')
-        setOpenModal(true)
-       
-    }
+   
 
     return (
-       <>
-       {openModal && <Modal handleClose={() => setOpenModal(false)} >
-            <GameBadge variant={variant} text={text + " challenge"} />
-        
-        </Modal>}
+       <div className="cursor-pointer group relative" >
+    
             <div  className={cn("relative", sizeClasses[size], className)}>
 
 
                 {hasWings && (
                     <>
                         <svg
-                            onClick={() => handleClick}
                             className="cursor-pointer absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
                             width="50%"
                             height="80%"
@@ -60,7 +48,6 @@ export function GameBadge({
                             />
                         </svg>
                         <svg
-                            onClick={() => handleClick}
                             className="absolute cursor-pointer right-0 top-1/2 translate-x-1/2 -translate-y-1/2 transform"
                             width="50%"
                             height="80%"
@@ -80,12 +67,11 @@ export function GameBadge({
                                 fontSize="4"
                             >
                                 {text}
-                            </text>
+                            </text>Day
                         </svg>
                     </>
                 )}
                 <svg
-                    onClick={() => handleClick}
                     viewBox="0 0 100 100"
                     className="relative w-full cursor-pointer h-full drop-shadow-xl"
                 >
@@ -126,7 +112,7 @@ export function GameBadge({
                 </svg>
 
             </div>
-       </>
+       </div>
     );
 }
 

@@ -39,12 +39,42 @@ const userIdAtom = atom ({
     default: "",
 })
 
+const moodAtom = atom ({
+    key: "moodAtom",
+    default: {
+        responded: false    ,
+        date:"",
+        eneryLevel: "",
+        mood: "",
+    }
+})
+
+const moodEnergyScoreAtom = atom({
+    key: "moodScoreAtom",
+    default: {
+        mood: 0,
+        energy: 0
+    }
+})
+
+
+const BadgeListAtom = atom({
+    key: "BadgeListAtom",
+    default: {
+        fetched: false,
+        list: []
+    }
+})
+
 export{
+    BadgeListAtom,
     avatarAtom,
     usernameAtom,
     LoaderMsgAtom,
     LoaderAtom,
     ToastMsgAtom,
     NpcAtom,
-    userIdAtom
+    userIdAtom,
+    moodAtom,
+    moodEnergyScoreAtom
 }
