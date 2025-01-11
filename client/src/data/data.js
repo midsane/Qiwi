@@ -16,7 +16,6 @@ import npc4 from "../assets/npc/chibi4-removebg-preview (2).png";
 import npc5 from "../assets/npc/chibi5-removebg-preview.png";
 
 
-
 const NPCMsg = ['Everyting will be fine!', "Take a break!", 'You can do it!', "Almost there!", "You got there!"]
 
 
