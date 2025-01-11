@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Calendar, Settings, Edit2, Trash2 } from 'lucide-react';
+import { useRecoilValue } from 'recoil';
+import { userIdAtom } from '@/atom/atom';
 
 const JournalPage = () => {
   const [entries, setEntries] = useState([
     { id: 1, date: '2025-01-11', content: 'Today was a productive day...', lastEdited: new Date()},
     { id: 2, date: '2025-01-10', content: 'Reflecting on my goals...', lastEdited: new Date()}
   ]);
+  //go here
+  const userId = useRecoilValue(userIdAtom)
+
   const [newEntry, setNewEntry] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
