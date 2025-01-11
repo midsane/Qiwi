@@ -1,4 +1,4 @@
-import { avatar1 } from "@/data/data"
+import { avatar1, npc1, npc2, NPCMsg } from "@/data/data"
 import { atom } from "recoil"
 
 const usernameAtom = atom({
@@ -24,6 +24,14 @@ const LoaderMsgAtom = atom ({
 const ToastMsgAtom = atom({
     key: "toastMsgAtom",
     default: ""
+})
+
+const NpcAtom = atom({
+    key: "npcAtom",
+    default: {
+        image: npc1,
+        msg: NPCMsg[0]
+    }
 })
 
 export{
