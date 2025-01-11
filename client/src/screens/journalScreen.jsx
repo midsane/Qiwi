@@ -3,35 +3,73 @@ import { Calendar, Settings, Edit2, Trash2 } from 'lucide-react';
 
 const JournalPage = () => {
   const [entries, setEntries] = useState([
-    { id: 1, date: '2025-01-11', content: 'Today was a productive day...', lastEdited: new Date() },
-    { id: 2, date: '2025-01-10', content: 'Reflecting on my goals...', lastEdited: new Date() }
+    { id: 1, date: '2025-01-11', content: 'Today was a productive day...', lastEdited: new Date()},
+    { id: 2, date: '2025-01-10', content: 'Reflecting on my goals...', lastEdited: new Date()}
   ]);
   const [newEntry, setNewEntry] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [showDeleteDialog, setShowDeleteDialog] = useState(null);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editingId) {
-      setEntries(entries.map(entry =>
+      const updatedEntries = entries.map(entry =>
         entry.id === editingId
           ? { ...entry, content: newEntry, lastEdited: new Date() }
           : entry
-      ));
+      );
+      setEntries(updatedEntries);
       setEditingId(null);
+      try {
+        const response = await fetch('/your-backend-endpoint/update-entry', {
+          method: 'PUT', 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: editingId,
+            content: newEntry,
+          }),
+        });
+  
+        if (response.ok) {
+          console.log('Entry updated successfully');
+        } else {
+          console.error('Failed to update entry');
+        }
+      } catch (error) {
+        console.error('Error updating entry:', error);
+      }
     } else {
-      setEntries([
-        {
-          id: Date.now(),
-          date: selectedDate,
-          content: newEntry,
-          lastEdited: new Date()
-        },
-        ...entries
-      ]);
+      const newEntryData = {
+        id: Date.now(),
+        date: selectedDate,
+        content: newEntry,
+        lastEdited: new Date(),
+      };
+      setEntries([newEntryData, ...entries]);
+      try {
+        const response = await fetch('/your-backend-endpoint/create-entry', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newEntryData),
+        });
+  
+        if (response.ok) {
+          console.log('New entry saved successfully');
+        } else {
+          console.error('Failed to save new entry');
+        }
+      } catch (error) {
+        console.error('Error saving new entry:', error);
+      }
     }
+  
     setNewEntry('');
   };
+  
 
   const handleEdit = (entry) => {
     setEditingId(entry.id);
