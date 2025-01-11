@@ -41,7 +41,7 @@ const moodSchema = new mongoose.Schema({
       required: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
     day: {
@@ -52,16 +52,16 @@ const moodSchema = new mongoose.Schema({
       type: Number,
       required: true,
       min: 1,
-      max: 10,
+      max: 5,
     },
-    energyLevel: {
+    energy: {
       type: Number,
       required: true,
       min: 1,
-      max: 10,
+      max: 5,
     },
   });
-  
+
 const Mood = mongoose.model('Mood', moodSchema);
 
 const journalSchema = new mongoose.Schema({
@@ -75,10 +75,14 @@ const journalSchema = new mongoose.Schema({
       required: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
     },
-  });
+    time: {
+        type: String,
+        required: true,
+    }
+});
 
 const Journal = mongoose.model('Journal', journalSchema);
 module.exports = 
