@@ -4,6 +4,7 @@ import { RecoilRoot } from "recoil"
 import LoginScreen from "./LoginScreen"
 import SignupScreen from "./signupscreen"
 import { ProfileScreen } from "./screens/profileScreen"
+import JournalPage from "./screens/journalScreen"
 
 
 
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
       {path: "auth/login", element: <div><LoginScreen /></div>},
       {path: "auth/signup", element: <div><SignupScreen /></div> },
       {path: "profile", element: <ProfileScreen />},
-      {path: "journal", element: <>Journal</>}
+      {path: "journal", element: <><JournalPage /></>}
     ]
   },
 ])
