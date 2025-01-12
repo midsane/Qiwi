@@ -5,13 +5,23 @@ import { useSetRecoilState } from "recoil"
 export const KnowYourEmotion = () => {
     const setToastMsg = useSetRecoilState(ToastMsgAtom)
     const paraRef = useRef()
-    const handleClick = () => {
+    const handleClick = async() => {
         const para = paraRef.current.value 
         if(para.trim() === ""){
             setToastMsg("input cannot be empty! Dont be shy")
             return;
         }
         //api call - joy, fear, anger, neutral, sadnesse
+        const response = await fetch("https://model.qiwi.midsane.tech/predict", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({message:  para})
+        })
+
+        const data = await response.json()
+        console.log(data)
     }
     return (
         <div className="flex flex-col gap-2 mt-10" >

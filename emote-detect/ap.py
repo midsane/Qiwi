@@ -7,6 +7,7 @@ import numpy as np
 import pickle
 from typing import List, Union
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 class_names = ['joy', 'fear', 'anger', 'sadness', 'neutral']
 
@@ -22,6 +23,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
+origin=['*']
+app.add_middleware(CORSMiddleware, allow_origins=origins, allow_cridentials=True, allow_methods=['*'], allow_headers=['*'])
 
 model = None
 tokenizer = None

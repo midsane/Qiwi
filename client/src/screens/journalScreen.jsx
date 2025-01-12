@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Calendar, Settings, Edit2, Trash2 } from "lucide-react";
+import { useSetRecoilState } from "recoil";
+import { LoaderAtom, LoaderMsgAtom } from "@/atom/atom";
 
 
 const JournalPage = () => {
@@ -25,8 +27,16 @@ const JournalPage = () => {
         new Date().toISOString("en-GB").split("T")[0]
     );
     const [showDeleteDialog, setShowDeleteDialog] = useState(null);
+    const setLoading = useSetRecoilState(LoaderAtom)
+    const setLoaderMsg = useSetRecoilState(LoaderMsgAtom)
 
     useEffect(() => {
+        setLoading(true)
+        setLoaderMsg("fetching journals")
+        setTimeout(() => {
+            setLoading(false)
+            setLoaderMsg("")
+        }, 1000);
         const fetchEntries = async () => {
             try {
                 const response = await fetch(
@@ -46,6 +56,12 @@ const JournalPage = () => {
     }, []);
 
     const handleSave = async () => {
+        setLoading(true)
+        setLoaderMsg("saving journal")
+        setTimeout(() => {
+            setLoading(false)
+            setLoaderMsg("")
+        }, 1000);
         if (editingId) {
             const updatedEntries = entries.map((entry) =>
                 entry.id === editingId
@@ -117,6 +133,13 @@ const JournalPage = () => {
     };
 
     const handleEdit = async (entry) => {
+        // setLoading(true)
+        // setLoaderMsg("editing journal")
+        // setTimeout(() => {
+        //     setLoading(false)
+        //     setLoaderMsg("")
+        // }, 2000);
+
         setEditingId(entry.id);
         setNewEntry(entry.content);
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -146,6 +169,12 @@ const JournalPage = () => {
 
     const handleDelete = useEffect(
         () => async (id) => {
+            setLoading(true)
+            setLoaderMsg("saving journal")
+            setTimeout(() => {
+                setLoading(false)
+                setLoaderMsg("")
+            }, 1000);
             try {
                 const response = await fetch(
                     process.env.BACKEND_URL + "/deleteJournal",
