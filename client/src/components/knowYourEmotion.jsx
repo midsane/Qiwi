@@ -1,11 +1,15 @@
 import { ToastMsgAtom } from "@/atom/atom"
-import {Workflow, Angry, Laugh, } from "lucide-react"
-import { useRef } from "react"
+import {Workflow, Angry, Laugh, Meh, Frown, Skull } from "lucide-react"
+import { useRef, useState } from "react"
 import { useSetRecoilState } from "recoil"
+import { FuturisticLoader } from "./aiLoading"
 export const KnowYourEmotion = () => {
     const setToastMsg = useSetRecoilState(ToastMsgAtom)
     const paraRef = useRef()
+    const [prediction, setPrediction] = useState("")
+    const [loading, setLoading] = useState(false);
     const handleClick = async() => {
+        setLoading(true)
         const para = paraRef.current.value 
         if(para.trim() === ""){
             setToastMsg("input cannot be empty! Dont be shy")
@@ -21,7 +25,8 @@ export const KnowYourEmotion = () => {
         })
 
         const data = await response.json()
-        console.log(data)
+        setPrediction(data.prediction)
+        setLoading(false)
     }
     return (
         <div className="flex flex-col gap-2 mt-10" >
@@ -44,6 +49,38 @@ export const KnowYourEmotion = () => {
             >
                 submit
             </button>
+            {loading && <FuturisticLoader />}
+            {prediction !== "" && <Logo prediction={prediction} />}
         </div>
     )
+}
+
+const Logo = ({prediction}) => {
+    let logo;
+    switch(logo){
+        case "joy":
+            logo = <Laugh />
+            break;
+        case "sadness":
+            logo = <Frown />
+            break;
+        case "fear":
+            logo = <Skull />
+            break;
+        case 'anger':
+            logo = <Angry />
+            break;
+        default:
+            logo = <Meh />
+            break;
+        
+    }
+    return (<div className="bg-purple-50 justify-center items-center flex flex-col gap-2 rounded-2xl p-4 mt-6">
+        <p className="text-orange-900 font-semibold">
+            we predict your mood to be {prediction}!
+        </p>
+        <div>
+            {logo}
+        </div>
+    </div>)
 }
