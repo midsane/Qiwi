@@ -1,5 +1,5 @@
 import { ToastMsgAtom } from "@/atom/atom"
-import {Workflow, Angry, , Laugh, } from "lucide-react"
+import {Workflow, Angry, Laugh, } from "lucide-react"
 import { useRef } from "react"
 import { useSetRecoilState } from "recoil"
 export const KnowYourEmotion = () => {
