@@ -29,7 +29,7 @@ export const ProfileScreen = () => {
             <BadgeSection />
           </section>
 
-          <section className="max-w-[70%] sm:max-w-screen" >
+          <section className="max-w-[80%]" >
             <HeatMap />
           </section>
 
