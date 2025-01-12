@@ -111,7 +111,7 @@ export const UserSection = () => {
                     <MoodLogo circle={false}/>
                     <EnergyLogo circle={false} />
                 </div>
-                <div className="items-end text-md sm:text-xl text-orange-600" ><p >{username.slice(0, 10)}{username.length > 10 && "..."}</p></div>
+                <div className="items-end text-md sm:text-xl text-orange-600" ><p >{username?.slice(0, 10)}{username?.length > 10 && "..."}</p></div>
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
