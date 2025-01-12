@@ -12,6 +12,7 @@ import { BreathingExercise } from "./components/gameTwo"
 import SoundPlayer from "./components/SoundPlayer"
 import Login from "./components/login"
 import Signup from "./components/signup"
+import { KnowYourEmotion } from "./components/knowYourEmotion"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <Dashboard /> },
       { path: "3-3-3", element: <GameOne /> },
       { path: "Anxiety-Breathing", element: <BreathingExercise /> },
-      { path: "Know your emotion!", element: <>know your emotion</> }
+      { path: "Know your emotion!", element: <KnowYourEmotion /> }
     ]
   },
 ])
