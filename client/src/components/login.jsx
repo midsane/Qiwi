@@ -1,5 +1,6 @@
 import { LoaderAtom, LoaderMsgAtom, ToastMsgAtom } from "@/atom/atom";
 import { useState } from "react";
+import { requestFormReset } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
@@ -14,31 +15,46 @@ export default function Login() {
         password: "",
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         setLoading(true)
         setLoaderMsg("loggin User in!")
-        fetch(import.meta.env.VITE_BACKEND_URL + "login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                localStorage.setItem('token', data.token)
-                setToastMsg("logging successfull")
+        try {
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + "login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData)
+            })
+            if(response.status > 300){
+                console.log(error)
+                setToastMsg("login failed-check credentials")
                 setLoaderMsg("")
                 setLoading(false)
-                localStorage.setItem("email", formData.email)
-                console.log(data.token)
-                navigation("../profile")
-            })
-            .catch(error => {
-                console.log(error)
-                setToastMsg("login failed")
-            });
+                return;
+            }
+                const data = await response.json();
+                if(data){
+                    console.log(data)
+                    localStorage.setItem('token', data.token)
+                    setToastMsg("logging successfull")
+                    setLoaderMsg("")
+                    setLoading(false)
+                    localStorage.setItem("email", formData.email)
+                    console.log(data.token)
+                    navigation("/profile");
+                }
+                else {
+                    console.log(error)
+                    setToastMsg("login failed")
+                }
+        } catch (error) {
+            console.log(error)
+            setToastMsg("login failed")
+        }
+
+           
         setLoaderMsg("")
         setLoading(false)
        

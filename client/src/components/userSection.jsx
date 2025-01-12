@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { avatarAtom, LoaderAtom, LoaderMsgAtom, ToastMsgAtom, userGrowthAtom, usernameAtom } from "@/atom/atom"
 import { EnergyLogo, MoodLogo } from "./Moodval"
 import { motion } from "framer-motion"
+import { postData } from "@/http/http"
 
 export const avatarArr = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8, avatar9]
 
@@ -21,7 +22,7 @@ export const UserSection = () => {
     const setToastMsg = useSetRecoilState(ToastMsgAtom)
 
     const growth = useRecoilValue(userGrowthAtom);
-    
+
 
     const handleClickonChibi = (a) => {
         setLoadingStatus(true)
@@ -32,7 +33,7 @@ export const UserSection = () => {
         setCurrentAvatar(a)
     }
 
-    const handleUsernameUpdate = () => {
+    const handleUsernameUpdate = async () => {
         if (userNameRef.current.value.length > 14) {
             setToastMsg("username cant be larger than 14 characters!")
             return;
@@ -43,6 +44,16 @@ export const UserSection = () => {
         setLoadingStatus(true)
         setLoaderMsg("updating username")
         //fetch request
+        const email = localStorage.getItem('email')
+        const response = await postData(import.meta.env.VITE_BACKEND_URL + "editUsername", { new_username: userNameRef.current.value, email })
+
+        if (response) {
+            setToastMsg("username changesd successfully")
+        }
+        else {
+            setToastMsg("cannot change username!")
+        }
+
         setLoadingStatus(false)
         setLoaderMsg("")
         setUsername(userNameRef.current.value)
@@ -76,7 +87,7 @@ export const UserSection = () => {
                             Choose your Avatar:
                         </p>
                     </div>
-                    
+
                     {avatarArr.map((a, i) =>
                         <motion.div
                             key={i}
@@ -108,7 +119,7 @@ export const UserSection = () => {
             </div>
             <div className="flex flex-col h-full justify-center items-center ">
                 <div className="flex gap-2">
-                    <MoodLogo circle={false}/>
+                    <MoodLogo circle={false} />
                     <EnergyLogo circle={false} />
                 </div>
                 <div className="items-end text-md sm:text-xl text-orange-600" ><p >{username?.slice(0, 10)}{username?.length > 10 && "..."}</p></div>

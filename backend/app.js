@@ -217,19 +217,18 @@ app.post('/updateXp', async (req, res) => {
 //MOODS
 app.get('/isLogged', async (req, res) => {
     try {
-        const user_id = req.body;
-
+        
         const date = String(now.getDate()).padStart(2, '0');
         const month = String(now.getMonth()+1).padStart(2, '0');
         const year = now.getFullYear();
-        const now = `${day}${month}${year}`;
+        const now = `${date}${month}${year}`;
 
-        const Logged = Mood.findOne({date:now}) || Journal.findOne({date:now});
-        let isLogged ;
-        if(!isLogged) {
-            isLogged = false;
-        } else {
+        const Logged = await Mood.findOne({date:now}) 
+        let isLogged
+        if(Logged) {
             isLogged = true;
+        } else {
+            isLogged = false;
         }
 
         return res.status(201).json({isLogged:isLogged})
@@ -264,7 +263,7 @@ app.post('/createJournal', async (req, res) => {
         const date = String(now.getDate()).padStart(2, '0');
         const month = String(now.getMonth()+1).padStart(2, '0');
         const year = now.getFullYear();
-        const now = `${day}${month}${year}`;
+        const now = `${date}${month}${year}`;
 
         const currentTime = new Date().toTimeString().split(' ')[0];
 
