@@ -4,9 +4,9 @@ import { Volume2, Pause, Play, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { Modal } from './modal';
 const sounds = [
-  { name: 'Rain', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-  { name: 'Ocean', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-  { name: 'Forest', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+  { name: 'Rain', src: '../assets/rain.mp3' },
+  { name: 'Ocean', src: '../assets/ocean.mp3' },
+  { name: 'Forest', src: '../assets/forest.mp3' },
   { name: 'Thunderstorm', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
 ];
 export default function SoundPlayer() {
