@@ -1,14 +1,5 @@
-import React, { useEffect } from 'react';
-
 const PartyCongratulation = () => {
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setVisible((prev) => !prev);
-        }, 500);
-
-        return () => clearInterval(timer);
-    }, []);
 
     const colors = ['#FF69B4', '#FFD700', '#00CED1', '#FF6347', '#32CD32'];
 

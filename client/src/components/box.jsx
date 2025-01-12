@@ -30,7 +30,7 @@ export const Box = ({title, logo}) => {
         initial={{ opacity: 0, scale: 0.9,y:-10 }}
         animate={{ opacity: 1, scale: 1, y:0 }}
         transition={{ duration: 0.5 }}
-        onClick={handleClick} className="bg-mblue min-w-32 flex justify-center items-center flex-col active:scale-90 ease-linear duration-100 hover:bg-mgreen rounded p-4 text-slate-100 font-thin cursor-pointer" >
+        onClick={handleClick} className="bg-amber-500 border border-orange-300 sm:min-w-32 min-w-24 flex justify-center items-center flex-col active:scale-90 ease-linear duration-100 hover:bg-amber-300 text-orange-900 rounded  sm:px-4 sm:py-4 py-4 px-1 sm:text-md text-xs font-thin cursor-pointer" >
             <div>{logo}</div>
             <p>{title}</p>
 

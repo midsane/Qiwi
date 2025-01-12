@@ -52,14 +52,27 @@ export const BadgeSection = () => {
             {openModal && <Modal cong={true} minH={80} handleClose={() => setOpenModal(false)} >
                 <GameBadge size="lg" variant={newBadge.variant} hasWings={newBadge.wings ? true: false} text={newBadge.text} />
 
-                <br />
-                <p className="w-[80%] text-center">Congratulations 🎉! You earned Starters Badge!</p>
-                <button onClick={() => setOpenModal(false)} className="py-1 px-8 rounded active:scale-95 ease-linear duration-100 hover:bg-green-300 bg-mgreen " >ok</button>
+                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-3xl">🎉</span>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900">
+                    Congratulations!
+                </h2>
+                <div className="bg-purple-50 rounded-2xl p-4 mt-6">
+                    <p className="text-purple-700 font-semibold">
+                        You've Earned Starters Badge
+                    </p>
+                </div>
+                <button
+                    onClick={() => setOpenModal(false)} 
+                    className="w-1/2 bg-purple-600 text-white rounded-full py-3 font-semibold hover:bg-purple-700 transition-colors"
+                >
+                    Done </button>
                 </Modal>}
-            <div className="flex flex-col gap-5 bg-slate-100 w-full justify-between rounded p-1">
+            <div className="flex flex-col gap-5  bg-orange-100 border border-orange-400 w-full justify-between rounded p-2">
                 <div className="flex gap-3">
-                    <p>Badges: </p>
-                    <Award color="red" />
+                    <p className="text-orange-900" >Badges: </p>
+                    <Award color="darkOrange" />
                 </div>
                 <div className="flex justify-start w-full items-center">
                     {midBadge.list.map((b, i) => (

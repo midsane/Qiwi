@@ -1,29 +1,30 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import RootLayout from "./screens/rootLayout"
 import { RecoilRoot } from "recoil"
-import LoginScreen from "./LoginScreen"
-import SignupScreen from "./signupscreen"
+
 import { ProfileScreen } from "./screens/profileScreen"
 import JournalPage from "./screens/journalScreen"
-import { FirstAidKit } from "./screens/firstaidkit"
 import { Dashboard } from "./screens/Dashboard"
-import GameOne from "./gameOne"
-import GameTwo from "./gameTwo"
-import SoundPlayer from "./SoundPlayer"
+import { GameOne } from "./components/gameOne"
+import { BreathingExercise } from "./components/gameTwo"
+
+
+import SoundPlayer from "./components/SoundPlayer"
+import Login from "./components/login"
+import Signup from "./components/signup"
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
-      {path: "auth/login", element: <div><LoginScreen /></div>},
-      {path: "auth/signup", element: <div><SignupScreen /></div> },
-      {path: "profile", element: <ProfileScreen />},
-      {path: "journal", element: <><JournalPage /></>},
-      {path: "dashboard", element: <Dashboard />},
-      { path: "firstAidKit", element: <FirstAidKit /> },
-      {path:"game1",element:<GameOne />},
-      {path:"game2",element:<GameTwo />},
-      {path:"sound",element:<SoundPlayer/>}
+      { path: "auth/login", element: <div><Login /></div> },
+      { path: "auth/signup", element: <div><Signup /></div> },
+      { path: "profile", element: <ProfileScreen /> },
+      { path: "journal", element: <><JournalPage /></> },
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "3-3-3", element: <GameOne /> },
+      { path: "Anxiety-Breathing", element: <BreathingExercise /> },
+      { path: "Know your emotion!", element: <>know your emotion</> }
     ]
   },
 ])
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (<RecoilRoot>
+    <SoundPlayer />
     <RouterProvider router={router} />
   </RecoilRoot>)
 }

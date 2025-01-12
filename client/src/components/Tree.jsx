@@ -10,8 +10,8 @@ export const MidTrees = () => {
         className="relative group" >
             <motion.img 
        
-            className="h-20" src={tree1} />
-            <div className="bg-stone-300 text-sm opacity-0 absolute group-hover:opacity-100 px-2 py-1 rounded" ><p >{"keep growing"}</p> </div>
+            className="sm:h-20 h-16 w-auto" src={tree1} />
+            <div className="bg-orange-100 border border-orange-300 text-orange-900 text-sm opacity-0 absolute group-hover:opacity-100 px-2 py-1 rounded" ><p >{"keep growing"}</p> </div>
         </motion.div>
    
     </>)

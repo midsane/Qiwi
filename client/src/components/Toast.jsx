@@ -16,7 +16,7 @@ export const ToastBar = ({ message, onClose }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 50 }}
                 transition={{ duration: 0.5 }}
-                className="fixed bottom-8 right-8 bg-blue-500 
+                className="fixed z-50 bottom-8 right-8 bg-blue-500 
                 bg-opacity-75 text-white px-4 py-3 rounded-full shadow-lg flex items-center space-x-4"
             >
                 <span>{message}</span>

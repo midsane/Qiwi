@@ -1,5 +1,7 @@
+import { avatarArr } from "@/components/userSection"
 import { avatar1, npc1, npc2, NPCMsg } from "@/data/data"
 import { atom } from "recoil"
+
 
 const usernameAtom = atom({
     key: "usernameAtom",
@@ -8,7 +10,7 @@ const usernameAtom = atom({
 
 const avatarAtom = atom({
     key: "avatarAtom",
-    default: avatar1
+    default: avatarArr[0]
 })
 
 const LoaderAtom = atom({
@@ -34,9 +36,13 @@ const NpcAtom = atom({
     }
 })
 
-const userIdAtom = atom ({
-    key: "userIdAtom",
-    default: "",
+
+const userGrowthAtom = atom( {
+    key : "userGrowthAtom",
+    default: {
+        xp: 0,
+        level: 0
+    }
 })
 
 const moodAtom = atom ({
@@ -74,7 +80,7 @@ export{
     LoaderAtom,
     ToastMsgAtom,
     NpcAtom,
-    userIdAtom,
     moodAtom,
-    moodEnergyScoreAtom
+    moodEnergyScoreAtom,
+    userGrowthAtom
 }

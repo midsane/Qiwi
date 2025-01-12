@@ -12,8 +12,8 @@ export const NPCDada = () => {
                 whileTap={{ scale: 0.9, rotate: [0, -10, 10, -10, 10, 0] }}
                 animate={{ y:0, x:0 }}
                 transition={{ duration: 0.5}}
-                className="h-20" src={npcinfo.image} />
-            <div className="bg-stone-300 text-sm opacity-0 absolute group-hover:opacity-100 px-2 py-1 rounded" ><p >{npcinfo.msg}</p> </div>
+                className="sm:h-20 h-14 w-auto" src={npcinfo.image} />
+            <div className="bg-orange-100 border border-orange-300 text-orange-900 text-sm opacity-0 absolute group-hover:opacity-100 px-2 py-1 rounded" ><p >{npcinfo.msg}</p> </div>
         </div>
     </div>)
 }

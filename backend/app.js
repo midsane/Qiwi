@@ -3,11 +3,23 @@ const {User} = require('./db/connectdb');
 const {Journal} = require('./db/connectdb');
 const {Mood} = require('./db/connectdb');
 const env = require('dotenv').config;
-
+const cors = require('cors')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
 
+env();
+
 app.use(express.json());
+const corsOptions = {
+  origin: "*", 
+  methods: ["GET", "POST"], 
+  allowedHeaders: ["Content-Type", "Authorization"], 
+};
+
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -42,22 +54,83 @@ app.get('/', (req, res) => {
 //USER DETAILS
 app.post('/newUser', async(req, res) => {
     try {
-        const {username, email, password} = req.body;
-    const newUser = new User({
-        username: username,
-        email: email,
-        password: password,
-    });
+        const { username, email, password } = req.body;
 
-    await newUser.save();
-    res.status(201).send({message:"new user added", user: newUser});
-    }
-    catch(error) {
-        res.status(500).send({message:"server error", error: error.message});
+        
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
+          username,
+          email,
+          password: hashedPassword,
+          imageUrl: 0,
+          xp: 0,
+          level: 0,
+        });
+
+        await newUser.save();
+        res.status(201).json({ message: "New user added", user: newUser });
+    } catch (error) {
+        console.error('Error creating new user:', error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 })
 
-app.get('/userDetails', async(req, res) => {
+app.post('/login', async (req, res) => {
+    console.log("login")
+    try {
+        const { email, password } = req.body;
+    
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+        res.status(200).json({ message: 'Login successful', token });
+    } catch (error) {
+        console.error('Error logging in:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+const verifyJWT = (req, res, next) => {
+    const token = req.headers['authorization'];
+    if (!token) {
+        return res.status(403).json({ message: 'No token provided' });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to authenticate token' });
+        }
+        req.userId = decoded.id;
+        next();
+    });
+};
+
+app.use('/userDetails', verifyJWT);
+app.use('/editUsername', verifyJWT);
+app.use('/updateXp', verifyJWT);
+app.use('/isLogged', verifyJWT);
+app.use('/getAllJournals', verifyJWT);
+app.use('/createJournal', verifyJWT);
+app.use('/editJournal', verifyJWT);
+app.use('/deleteJournal', verifyJWT);
+
+app.post('/userDetails', async(req, res) => {
+    console.log(req.body)
     try {
         const {email} = req.body;
         if(!email) {
@@ -86,7 +159,7 @@ app.get('/userDetails', async(req, res) => {
     }
 });
 
-app.put('/editUsername', async (req, res) => {
+app.post('/editUsername', async (req, res) => {
     try {
         const {new_username, email} = req.body;
 
@@ -107,24 +180,26 @@ app.put('/editUsername', async (req, res) => {
     }
 })
 
-app.put('/updateXp', async (req, res) => {
+app.post('/updateXp', async (req, res) => {
     try {
         const {email} = req.body;
-        let newXp = User.findOne({email}).xp;
-        let newLevel = User.findOne({email}).level;
-        if(xp > 5) {
-            xp = 1;
-            level++;
+        const user = await User.findOne({email});
+     
+        let newLevel = user.level;
+        let newXp = user.xp +1;
+        if(newXp > 5) {
+            newXp = 0;
+            newLevel++;
 
-            const updatedXp = User.findOneAndUpdate(
+            const updatedXp = await User.findOneAndUpdate(
                 {email},
                 {xp:newXp},
                 {level:newLevel},
                 {new:true}
             )
         } else {
-            xp++;
-            const updatedXp = User.findOneAndUpdate(
+            newXp++;
+            const updatedXp = await User.findOneAndUpdate(
                 {email},
                 {xp:newXp},
                 {new:true}
