@@ -56,8 +56,9 @@ export const KnowYourEmotion = () => {
 }
 
 const Logo = ({prediction}) => {
+    
     let logo;
-    switch(logo){
+    switch(prediction){
         case "joy":
             logo = <Laugh />
             break;
