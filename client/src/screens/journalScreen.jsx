@@ -6,18 +6,7 @@ import { LoaderAtom, LoaderMsgAtom } from "@/atom/atom";
 
 const JournalPage = () => {
     const [entries, setEntries] = useState([
-        {
-            _id: 1,
-            date: Date.now(),
-            content: "Today was a productive day...",
-            email: "677aca39c984b46e6839e25f",
-        },
-        {
-            _id: 2,
-            date: Date.now() + 60 * 60 * 1000,
-            content: "Reflecting on my goals...",
-            email: "677aca39c984b46e6839e25f",
-        },
+        
     ]);
     const email = localStorage.getItem('email')
 
