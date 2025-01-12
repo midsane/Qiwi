@@ -1,6 +1,5 @@
 import { LoaderAtom, LoaderMsgAtom, ToastMsgAtom } from "@/atom/atom";
 import { useState } from "react";
-import { requestFormReset } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
@@ -28,7 +27,6 @@ export default function Login() {
                 body: JSON.stringify(formData)
             })
             if(response.status > 300){
-                console.log(error)
                 setToastMsg("login failed-check credentials")
                 setLoaderMsg("")
                 setLoading(false)
@@ -46,12 +44,11 @@ export default function Login() {
                     navigation("/profile");
                 }
                 else {
-                    console.log(error)
-                    setToastMsg("login failed")
+                    setToastMsg("login failed | Check Credentials")
                 }
         } catch (error) {
             console.log(error)
-            setToastMsg("login failed")
+            setToastMsg("login failed | Check Credentials")
         }
 
            

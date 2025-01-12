@@ -1,4 +1,5 @@
 import { LoaderAtom, LoaderMsgAtom, ToastMsgAtom } from "@/atom/atom";
+import { Loader } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
@@ -15,28 +16,43 @@ export default function Signup() {
         confirmPassword: "",
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        console.log(formData)
+        
         setLoading(true)
         setLoaderMsg("Registering User!")
-        fetch(import.meta.env.VITE_BACKEND_URL+"newUser", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            setToastMsg("Signup successfull")
+       try {
+
+         const response = await fetch(import.meta.env.VITE_BACKEND_URL+"newUser", {
+             method: "POST",
+             headers: {
+                 "Content-Type": "application/json",
+             },
+             body: JSON.stringify(formData)
+         })
+         
+        
+        if(response.status > 300){
+
+            setToastMsg(response.message || "Signup failed")
             setLoaderMsg("")
             setLoading(false)
-            navigation("../auth/login")
-        })
-        .catch(error => {
-            setToastMsg("Signup failed")
-        });
+            return;
+        }
+         const data = await response.json();
+         if(data){
+             console.log("data", data)
+             setToastMsg(data.message || "Sign up Successfull")
+             setLoaderMsg("")
+             setLoading(false)
+             navigation("../auth/login")
+         }
+        
+       } catch (error) {
+           
+           setToastMsg(error.msg || error.message || "Signup failed")
+       }
+       
         setLoaderMsg("")
         setLoading(false)
     };
@@ -54,7 +70,7 @@ export default function Signup() {
             <main className="container mx-auto mt-16 max-w-md px-4">
                 <div className="rounded-lg bg-white p-8 shadow-lg">
                     <h1 className="mb-6 text-center text-3xl font-bold text-gray-900">
-                        Create Account
+                        {Loader ? "Creating Account.." : "Create Account "}
                     </h1>
                     <form onSubmit={handleSubmit} className="space-y-6">
                    

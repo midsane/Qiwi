@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Modal } from "./modal";
 export const NavBar = () => {
     const [openModal, setOpenModal] = useState(false);
+    
     const navigate = useNavigate()
     const handleClick = () => {
         setOpenModal(true)
